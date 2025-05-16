@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OSS - Giriş</title>
+   <!-- Particles.js -->
+   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+    
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    /* Particles background */
+        #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    
+    html,body{
+      display: grid;
+      height: 100%;
+      width: 100%;
+      place-items: center;
+      background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+    }
+    
+    ::selection{
+      background: #1a75ff;
+      color: #fff;
+    }
+    
+    .wrapper{
+      overflow: hidden;
+      max-width: 390px;
+      background: #fff;
+      padding: 50px;
+      border-radius: 20px;
+      box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+      opacity: 0; /* Başlangıçta görünmez */
+      transform: translateY(50px); /* Başlangıçta altta */
+      animation: slideIn 2.5s ease-out forwards; /* Animasyonu başlat */
+    }
+    
+    /* Animasyon: Container'ın yavaşça yukarı doğru gelmesi */
+    @keyframes slideIn {
+      0% {
+        transform: translateY(50px); /* Başlangıçta altta */
+        opacity: 0; /* Başlangıçta görünmez */
+      }
+      100% {
+        transform: translateY(0); /* Ortada */
+        opacity: 1; /* Görünür hale gelmesi */
+      }
+    }
+
+
+    /* Kırmızı giriş yap label yazısı */
+    #signup:checked ~ label.signup {
+      color: white;
+    }
+
+    #signup:checked ~ label.login {
+      color: black;
+    }
+    .wrapper .title-text{
+      display: flex;
+      width: 200%;
+    }
+    
+    .wrapper .title{
+      width: 50%;
+      font-size: 35px;
+      font-weight: 600;
+      text-align: center;
+      transition: all 1s cubic-bezier(0.68,-0.55,0.265,1.55);
+    }
+    
+    .wrapper .slide-controls{
+      position: relative;
+      display: flex;
+      height: 50px;
+      width: 100%;
+      overflow: hidden;
+      margin: 30px 0 20px 0;
+      justify-content: space-between;
+      border: 1px solid lightgrey;
+      border-radius: 15px;
+    }
+    
+    .slide-controls .slide{
+      height: 100%;
+      width: 100%;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 500;
+      text-align: center;
+      line-height: 48px;
+      cursor: pointer;
+      z-index: 1;
+      transition: all 1.5s ease;
+    }
+    
+    .slide-controls label.signup{
+      color: #000;
+    }
+    
+    .slide-controls .slider-tab{
+      position: absolute;
+      height: 100%;
+      width: 50%;
+      left: 0;
+      z-index: 0;
+      border-radius: 15px;
+      background: -webkit-linear-gradient(left,#003366,#004080,#0059b3, #0073e6);
+      transition: all 1s cubic-bezier(0.68,-0.55,0.265,1.55);
+    }
+    
+    input[type="radio"]{
+      display: none;
+    }
+    #signup:checked ~ .slider-tab{
+      left: 50%;
+    }
+    
+    #signup:checked ~ label.signup{
+      color: #ffffff;
+      cursor: default;
+      user-select: none;
+    }
+    
+    #signup:checked ~ label.login{
+      color: #000000;
+    }
+    
+    #login:checked ~ label.signup{
+      color: #000;
+    }
+    
+    #login:checked ~ label.login{
+      cursor: default;
+      user-select: none;
+    }
+    
+    .wrapper .form-container{
+      width: 100%;
+      overflow: hidden;
+    }
+    
+    .form-container .form-inner{
+      display: flex;
+      width: 200%;
+    }
+    
+    .form-container .form-inner form{
+      width: 50%;
+      transition: all 1s cubic-bezier(0.68,-0.55,0.265,1.55);
+    }
+    
+    .form-inner form .field{
+      height: 50px;
+      width: 100%;
+      margin-top: 20px;
+    }
+    
+    .form-inner form .field input{
+      height: 100%;
+      width: 100%;
+      outline: none;
+      padding-left: 15px;
+      border-radius: 15px;
+      border: 1px solid rgb(33, 137, 255);
+      border-bottom-width: 2px;
+      font-size: 17px;
+      transition: all 0.3s ease;
+    }
+    
+    .form-inner form .field input:focus{
+      border-color: #1a75ff;
+    }
+    
+    .form-inner form .field input::placeholder{
+      color: #999;
+      transition: all 0.3s ease;
+    }
+    
+    form .field input:focus::placeholder{
+      color: #1a75ff;
+    }
+    
+    .form-inner form .pass-link{
+      margin-top: 5px;
+    }
+    
+    .form-inner form .signup-link{
+      text-align: center;
+      margin-top: 30px;
+    }
+    
+    .form-inner form .pass-link a,
+    .form-inner form .signup-link a{
+      color: #1a75ff;
+      text-decoration: none;
+    }
+    
+    .form-inner form .pass-link a:hover,
+    .form-inner form .signup-link a:hover{
+      text-decoration: underline;
+    }
+    
+    form .btn{
+      height: 50px;
+      width: 100%;
+      border-radius: 15px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    form .btn .btn-layer{
+      height: 100%;
+      width: 300%;
+      position: absolute;
+      left: -100%;
+      background: -webkit-linear-gradient(right,#003366,#004080,#0059b3, #0073e6);
+      border-radius: 15px;
+      transition: all 0.4s ease;
+    }
+    
+    form .btn:hover .btn-layer{
+      left: 0;
+    }
+    
+    form .btn input[type="submit"]{
+      height: 100%;
+      width: 100%;
+      z-index: 1;
+      position: relative;
+      background: none;
+      border: none;
+      color: #fff;
+      padding-left: 0;
+      border-radius: 15px;
+      font-size: 20px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    
+    .footer-logo {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      background-color: #ffffff;
+      box-shadow: rgb(38, 57, 77) 0px 20px 30px 20px;
+      padding: 10px 0;
+    }
+    
+    .footer-logo img {
+      max-width: 200px;
+      height: auto;
+    }
+
+.error {
+  
+        color: red;
+        font-weight: bold;
+        
+    }
+    .success {
+  
+    color: #155724;
+    font-weight: bold;
+}
+
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+  </style>
+</head>
+<body>
+   <!-- Particles.js container -->
+   <div id="particles-js"></div>
+  <div class="wrapper">
+    <div class="title-text">
+      <div class="title login">Giriş</div>
+      <div class="title login">Giriş</div>
+    </div>
+    
+    <div class="form-container">
+      <!-- Flash mesajlarını burada gösteriyoruz -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul>
+                {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+     {% if redirect_flag %}
+        <script>
+            setTimeout(() => {
+                window.location.href = "/anasayfa";
+            }, 2000);
+        </script>
+    {% endif %}
+      <div class="slide-controls">
+        <input type="radio" name="slide" id="login" checked>
+        <input type="radio" name="slide" id="signup">
+        <label for="login" class="slide login">Öğrenci</label>
+        <label for="signup" class="slide signup">Öğretmen</label>
+        <div class="slider-tab"></div>
+      </div>
+      <div class="form-inner">
+<!-- Giriş Yap Formu -->
+<form action="{{ url_for('login') }}" method="POST" class="login" id="loginForm">
+  <div class="field">
+    <input type="text" id="studentNumber" name="username" placeholder="Öğrenci Numarası" required>
+  </div>
+  <div class="field">
+    <input type="password" id="password" name="password" placeholder="Şifre" required>
+  </div>
+  <a href="{{ url_for('sifremi_unuttum') }}">Şifremi Unuttum</a>
+  <div class="field btn">
+    <div class="btn-layer"></div>
+    <input type="submit" value="Giriş Yap">
+  </div>
+  <div class="signup-link">Developer By <a href="#">Emre-Mert</a></div>
+</form>
+       
+ <form action="{{ url_for('teacher_login') }}" method="post">
+  <div class="field">
+    <input type="text" name="teacher_number" placeholder="Öğretmen Numarası" required>
+  </div>
+  <div class="field">
+    <input type="password" name="password" placeholder="Şifre" required>
+  </div>
+  <a href="{{ url_for('sifremi_unuttum') }}">Şifremi Unuttum</a>
+
+  <!-- Flash mesajlarını göstermek için -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+          <ul>
+              {% for category, message in messages %}
+                  <p class="error-message">{{ error }}</p>
+              {% endfor %}
+          </ul>
+      {% endif %}
+  {% endwith %}
+  <div class="field btn">
+    <div class="btn-layer"></div>
+    <input type="submit" value="Giriş Yap">
+  </div>
+</form>
+</div>
+</div>
+</div>
+<div class="footer-logo">
+  <img src="{{ url_for('static', filename='oss1.png') }}" alt="Logo">
+</div>
+</div>
+
+  <script>
+   
+    
+  
+   // Particles.js başlat
+   particlesJS("particles-js", {
+      particles: {
+        number: { value: 50, density: { enable: true, value_area: 800 } },
+        color: { value: "#004085" },
+        shape: { type: "circle" },
+        opacity: { value: 0.4, random: true },
+        size: { value: 5, random: true },
+        line_linked: { enable: true, distance: 150, color: "#004085", opacity: 0.4, width: 1 },
+        move: { enable: true, speed: 3 }
+      }
+    });
+    const loginText = document.querySelector(".title-text .login");
+    const loginForm = document.querySelector("form.login");
+    const loginBtn = document.querySelector("label.login");
+    const signupBtn = document.querySelector("label.signup");
+    const signupLink = document.querySelector("form .signup-link a");
+
+    signupBtn.onclick = () => {
+      loginForm.style.marginLeft = "-50%";
+      loginText.style.marginLeft = "-50%";
+    };
+
+    loginBtn.onclick = () => {
+      loginForm.style.marginLeft = "0%";
+      loginText.style.marginLeft = "0%";
+    };
+
+    signupLink.onclick = () => {
+      signupBtn.click();
+      return false;
+    };
+    signupBtn.onclick = () => {
+  loginForm.style.marginLeft = "-50%";
+  loginText.style.marginLeft = "-50%";
+};
+signupBtn.onclick = () => {
+  loginForm.style.marginLeft = "-50%";
+  loginText.style.marginLeft = "-50%";
+  // Tüm elementlere 'red-theme' class'ını ekle
+  document.querySelector(".slider-tab").classList.add("red-theme");
+  document.querySelectorAll(".btn-layer").forEach(layer => layer.classList.add("red-theme"));
+  document.querySelectorAll(".field input").forEach(input => input.classList.add("red-theme"));
+};
+  
+ 
+  </script>
+  
+</body>
+
+
+</script>
+</html>

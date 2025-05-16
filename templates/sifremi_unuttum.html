@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Şifremi Unuttum</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    html, body {
+      display: grid;
+      height: 100%;
+      width: 100%;
+      place-items: center;
+      background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+    }
+
+    ::selection {
+      background: #1a75ff;
+      color: #fff;
+    }
+
+    .wrapper {
+      overflow: hidden;
+      max-width: 400px; /* Genişliği artırdık */
+      background: #fff;
+      padding: 60px; /* İçeriği rahatlatmak için padding'i arttırdık */
+      border-radius: 20px;
+      box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+      opacity: 0;
+      transform: translateY(50px);
+      animation: slideIn 2.5s ease-out forwards;
+      height: auto; /* Yüksekliği otomatik yaptık */
+      margin-bottom: 100px; /* Alt boşluğu ekledik */
+    }
+
+    @keyframes slideIn {
+      0% {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .wrapper .title-text {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 20px; /* Başlık ile form arasına boşluk ekledik */
+    }
+
+    .wrapper .title {
+      font-size: 35px;
+      font-weight: 600;
+      text-align: center;
+      width: auto;
+    }
+
+    .form-container {
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .form-inner form {
+      width: 100%;
+      transition: all 1.5s cubic-bezier(0.68,-0.55,0.265,1.55);
+    }
+
+    .form-inner form .field {
+      height: 50px;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .form-inner form .field input {
+      height: 100%;
+      width: 100%;
+      outline: none;
+      padding-left: 15px;
+      border-radius: 15px;
+      border: 1px solid rgb(33, 137, 255);
+      border-bottom-width: 2px;
+      font-size: 17px;
+    }
+
+    .form-inner form .field input:focus {
+      border-color: #1a75ff;
+    }
+
+    .form-inner form .field input::placeholder {
+      color: #999;
+    }
+
+    form .btn {
+      height: 50px;
+      width: 100%;
+      border-radius: 15px;
+      position: relative;
+      overflow: hidden;
+      margin-top: 20px; /* Button ile diğer elementler arasında boşluk ekledik */
+    }
+
+    form .btn .btn-layer {
+      height: 100%;
+      width: 300%;
+      position: absolute;
+      left: -100%;
+      background: -webkit-linear-gradient(right, #003366, #004080, #0059b3, #0073e6);
+      border-radius: 15px;
+      transition: all 0.4s ease;
+    }
+
+    form .btn:hover .btn-layer {
+      left: 0;
+    }
+
+    form .btn input[type="submit"] {
+      height: 100%;
+      width: 100%;
+      z-index: 1;
+      position: relative;
+      background: none;
+      border: none;
+      color: #fff;
+      padding-left: 0;
+      border-radius: 15px;
+      font-size: 20px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .footer-logo {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      background-color: #ffffff;
+      box-shadow: rgb(38, 57, 77) 0px 20px 30px 20px;
+      padding: 10px 0;
+      margin-top: 40px; /* Logo ve buton arasında boşluk bıraktık */
+    }
+
+    .footer-logo img {
+      max-width: 200px;
+      height: auto;
+    }
+
+    #message {
+      text-align: center;
+      font-size: 18px;
+      margin-top: 20px;
+      color: rgb(0, 65, 161);
+    }
+  </style>
+</head>
+<body>
+
+ <div class="wrapper">
+  <div class="title-text">
+    <div class="title">Şifremi Unuttum</div>
+  </div>
+  <div class="form-container">
+    <div class="form-inner">
+      <form id="resetForm" action="#" method="post">
+        <div class="field">
+          <input type="text" placeholder="Öğrenci veya Öğretmen No" required>
+        </div>
+        <div class="field">
+          <input type="email" placeholder="E-posta" required>
+        </div>
+        <div class="field btn">
+          <div class="btn-layer"></div>
+          <input type="submit" value="Şifreyi Gönder">
+        </div>
+      </form>
+      <div id="message"></div>
+    </div>
+  </div>
+</div>
+
+  <div class="footer-logo">
+    <img src="{{ url_for('static', filename='oss1.png') }}" alt="Logo">
+  </div>
+
+  <script>
+  
+  </script>
+
+</body>
+</html>

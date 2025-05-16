@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OSS - Sonuçlarım</title>
+
+  <!-- Bootstrap ve FontAwesome -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+
+  <!-- Particles.js -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f7fc;
+    }
+
+    /* Particles background */
+    #particles-js {
+      position: fixed;
+      background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 250px;
+      height: 100%;
+      background-color: #ffffff;
+      box-shadow: rgb(38, 57, 77) 0px 30px 60px -10px;
+      padding-top: 20px;
+      z-index: 100;
+      text-align: center;
+      transition: transform 1.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar.hidden {
+      transform: translateX(-100%);
+    }
+
+    .sidebar .logo img {
+      width: 120px;
+      margin-bottom: 20px;
+    }
+
+   /* Sidebar link icon ve text düzenlemeleri */
+.sidebar a {
+  padding: 20px;
+  text-decoration: none;
+  font-size: 1.6rem;
+  color: rgb(0, 0, 0);
+  display: block;
+  transition: 0.3s;
+  position: relative; /* Çizgi eklemek için gerekli */
+}
+
+/* Hover efekti: Sol tarafa çizgi ekleme */
+.sidebar a:hover {
+  background: linear-gradient(45deg, #004085, #0066cc, #3399ff);
+  color: rgb(255, 255, 255);
+}
+
+
+.sidebar a:hover::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 5px; /* Çizginin genişliği */
+  height: 100%; /* Çizginin yüksekliği */
+  background: linear-gradient(45deg, #004085, #0066cc, #3399ff);
+  transform: translateY(-50%); /* Çizgiyi dikeyde ortalamak için */
+}
+
+    .sidebar a i {
+      margin-right: 10px; /* İkon ile yazı arasına boşluk ekler */
+      font-size: 1.3rem; /* İkon boyutunu ayarlamak için */
+    }
+
+    /* Sidebar alt kısmı için logo */
+    .sidebar .logo-bottom {
+      margin-top: auto; /* Bu satır logo'yu en alt kısma sabitler */
+      padding-bottom: 20px;
+    }
+
+    .sidebar .logo-bottom img {
+      width: 80%;
+      margin-bottom: 20px;
+    }
+
+    /* Content */
+    .content {
+      margin-left: 260px;
+      padding: 20px;
+    }
+
+    /* Navbar - Gradyan mavi tonları */
+    .navbar {
+      background: linear-gradient(45deg, #004085, #0066cc, #3399ff);
+      box-shadow: rgb(38, 57, 77) 0px 25px 20px -10px;
+      border-radius: 10px; /* Navbar'ın köşelerini yuvarlatmak için */
+    }
+
+    .navbar-brand {
+      color: rgb(255, 255, 255) !important;
+    }
+
+    .navbar-nav .nav-link {
+      color: rgb(255, 255, 255) !important;
+    }
+
+    .navbar-nav .nav-link:hover {
+      color: #ffffff !important;
+    }
+
+    /* Dashboard header */
+    .dashboard-header {
+      margin-bottom: 20px;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #004085;
+    }
+
+    /* Menü ikonu ve metin düzenlemesi */
+.menu-icon-wrapper {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  z-index: 200;
+  background: linear-gradient(45deg, #004085, #0066cc);
+  padding: 20px 60px;
+  box-shadow: rgb(38, 57, 77) 0px 30px 60px -10px;
+  border-radius: 10px; /* Köşe yuvarlama */
+}
+
+/* Menü ikonu */
+.menu-icon img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px; /* İkon ile metin arasına boşluk ekler */
+}
+/* Navbar içindeki karanlık mod butonunu sağa yerleştir */
+/* Navbar içindeki karanlık mod butonunun arka planını saydam yap */
+.navbar .btn-dark {
+  background-color: transparent; /* Saydam arka plan */
+  border: none; /* Kenarlık yok */
+  color: #ffffff; /* Yazı rengi beyaz */
+  position: relative;
+}
+
+.navbar .btn-dark:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Hover sırasında biraz opaklık ekleyelim */
+}
+/* Navbar ikonlarına hover efekti ekleyelim */
+.navbar .nav-link, .navbar .btn-dark {
+  position: relative;
+  text-decoration: none; /* Metin altı çizgilerini kaldırır */
+}
+
+.navbar .nav-link:hover, .navbar .btn-dark:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Hover sırasında biraz opaklık ekleyelim */
+  color: #000000; /* Hover sırasında ikonlar beyaz olacak */
+}
+
+.navbar .nav-link:hover::after, .navbar .btn-dark:hover::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px; /* Çizgi yüksekliği */
+  background-color: #fff; /* Çizgi rengi beyaz */
+}
+
+/* Menü yazısı */
+.menu-icon-wrapper .menu-text {
+  font-size: 1.2rem;
+  color: #ffffff !important; /* Beyaz renk ve !important ile yazıyı beyaz yap */
+  font-weight: normal;
+}
+
+    /* Profil dropdown menüsü */
+    .profile-menu {
+      position: absolute;
+      top: 50px;
+      right: 0;
+      background-color: #ffffff;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+      display: none;
+      z-index: 300;
+    }
+
+    .profile-menu a {
+      padding: 10px 20px;
+      text-decoration: none;
+      display: block;
+      color: #000000;
+    }
+
+    .profile-menu a:hover {
+      background-color: #f4f7fc;
+    }
+
+    /* Bildirim menüsü */
+    .notification-menu {
+      position: absolute;
+      top: 50px;
+      right: 70px;
+      background-color: #ffffff;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+      display: none;
+      z-index: 300;
+    }
+
+    .notification-menu a {
+      padding: 10px 20px;
+      text-decoration: none;
+      display: block;
+      color: #000000;
+    }
+
+    .notification-menu a:hover {
+      background-color: #f4f7fc;
+    }
+/* Karanlık Mod için genel stil değişiklikleri */
+body.dark-mode {
+  background-color: #121212;
+  color: white;
+}
+
+.sidebar.dark-mode {
+  background-color: #1c1c1c;
+}
+
+.navbar.dark-mode {
+  background: linear-gradient(45deg, #333, #555);
+}
+
+.card.dark-mode {
+  background-color: #333;
+  color: white;
+}
+
+.sidebar a.dark-mode {
+  color: #ddd;
+}
+
+.sidebar a.dark-mode:hover {
+  background-color: #444;
+  color: white;
+}
+
+.profile-name.dark-mode {
+  color: white;
+}
+
+.menu-icon-wrapper.dark-mode {
+  background: linear-gradient(45deg, #333, #555);
+}
+
+  </style>
+</head>
+
+<body>
+  <!-- Particles.js container -->
+  <div id="particles-js"></div>
+
+
+<!-- Menü ikonu ve yazısı -->
+<div class="menu-icon-wrapper" onclick="toggleSidebar()">
+    <div class="menu-icon">
+      <img src="{{ url_for('static', filename='menu.png') }}" alt="Menü" />
+      <span class="menu-text">Menü</span>
+    </div>
+  </div>
+  
+  <style>
+    /* Menü ikonu ve metin düzenlemesi */
+    .menu-icon {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      z-index: 200;
+    }
+  
+    .menu-icon img {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px; /* İkon ile metin arasına boşluk ekler */
+    }
+  
+    .menu-text {
+      font-size: 1.2rem;
+      color: #333;
+      font-weight: bold;
+    }
+  </style>
+
+  <!-- Sidebar'da Logo yerine Profil Resmi ve İsim -->
+  <div class="sidebar" id="sidebar">
+    <div class="profile-section">
+      <img src="{{ url_for('static', filename='uploads/' + profile_photo) }}" class="profile-img" />
+      <h5 class="profile-name">{{ full_name }}</h5> <!-- Dinamik olarak ismi değiştirebilirsiniz -->
+    </div>
+    <!-- Diğer sidebar içerikleri burada kalacak -->
+    <a href="{{ url_for('anasayfa') }}" class="active"><i class="fas fa-home"></i> Ana Sayfa</a>
+<a href="{{ url_for('sinavlarim') }}"><i class="fas fa-clipboard-list"></i> Sınavlarım</a>
+<a href="{{ url_for('sonuclarim') }}"><i class="fas fa-chart-line"></i> Sonuçlarım</a>
+<a href="{{ url_for('derslerim') }}"><i class="fas fa-book"></i> Derslerim</a>
+<a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Çıkış</a>
+    
+    <!-- En altta logo -->
+    <div class="logo-bottom">
+      <img src="{{ url_for('static', filename='oss1.png') }}" alt="OSS Logo" />
+    </div>
+  </div>
+  
+  <style>
+    /* Profil kısmı */
+    .profile-section {
+      text-align: center;
+      margin-bottom: 30px;
+      margin-top: 120px; /* Profil kısmını biraz aşağıya kaydırmak için ekledik */
+    }
+  
+    .profile-img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+  
+    .profile-name {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #333;
+    }
+    body {
+      color: #fff;
+      background-color: #121212;
+    }
+
+    .card {
+      border: none;
+      border-radius: 15px;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card.passed {
+      background-color: #198754;
+      color: white;
+    }
+
+    .card.failed {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    .card.total {
+      background-color: #0d6efd;
+      color: white;
+    }
+
+    .dashboard-header {
+      margin-bottom: 30px;
+      font-weight: bold;
+    }
+
+    canvas {
+     background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+      border-radius: 10px;
+      padding: 15px;
+    }
+    
+
+ 
+/* Ana Container için Stil */
+.main-container {
+  background-color: #ffffff; /* Sayfa arka planı beyaz */
+  padding: 20px; /* Üst-alt boşlukları */
+  margin: 0 auto; /* Ortalamak için */
+  max-width: 1100px; /* Maksimum genişlik */
+  min-height: 100vh; /* Sayfanın yüksekliğini tam doldur */
+}
+  </style>
+
+  <!-- İçerik -->
+  <div class="content">
+    <!-- Navbar -->
+     
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Hoşgeldiniz, 
+      {% if session.get('fullname') %}
+        {{ session['fullname'] }}
+      {% else %}
+        Misafir
+      {% endif %}
+    </a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <!-- Bildirim ve Profil menüsü -->
+            <button class="btn btn-dark" id="darkModeToggle" onclick="toggleDarkMode()">
+                <i class="fas fa-sun" id="darkModeIcon"></i> <!-- Karanlık modda Güneş ikonu -->
+              </button>
+            <li class="nav-item">
+              <a class="nav-link" href="#" onclick="toggleNotificationMenu()">
+                <i class="fas fa-bell"></i> Bildirim
+              </a>
+              <div class="notification-menu" id="notificationMenu">
+                <a href="#">Yeni bildirim 1</a>
+                <a href="#">Yeni bildirim 2</a>
+                <a href="#">Yeni bildirim 3</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" onclick="toggleProfileMenu()">
+                <i class="fas fa-user"></i> Profil
+              </a>
+              <div class="profile-menu" id="profileMenu">
+                <a href="hesapayar.html">Hesap Ayarları</a>
+                
+                <a href="#">Çıkış</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+<!-- İçerik -->
+<div class="container mt-5">
+    <h1 class="dashboard-header text-center">📊 Sınav Sonuçlarım</h1>
+    <div class="row mb-4 justify-content-center">
+      <div class="col-md-4 mb-3">
+        <div class="card total p-3">
+          <h5 class="card-title">Toplam Sınav</h5>
+          <h2>5</h2>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="card passed p-3">
+          <h5 class="card-title">Başarılı</h5>
+          <h2>3</h2>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="card failed p-3">
+          <h5 class="card-title">Başarısız</h5>
+          <h2>2</h2>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Grafik Alanı -->
+    <div class="row justify-content-center">
+      <div class="col-12">
+        <canvas id="resultsChart" height="120"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+  document.querySelector('a[href="#"]').addEventListener('click', function(e) {
+  e.preventDefault(); // Varsayılan davranışı engelle
+  window.location.href = "sınavlarım.html"; // Yönlendirme
+});
+  function goToAccountSettings() {
+    window.location.href = "hesapayar.html";  // Yönlendirmek istediğiniz sayfa
+  }
+</script>
+
+  <!-- Çıkış Yapma Fonksiyonu -->
+  <script>
+    // Kullanıcı adı (Örnek olarak "Emre" kullanıldı, dinamik hale getirilebilir)
+   
+
+    // Hoşgeldiniz mesajını dinamik olarak değiştirme
+    document.addEventListener("DOMContentLoaded", function() {
+      const welcomeMessage = document.querySelector(".navbar-brand");
+      welcomeMessage.textContent = `Hoşgeldiniz, ${userName}`;
+    });
+
+    function logout() {
+      alert("Çıkış yapılıyor...");
+      window.location.href = "giris.html";
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById("sidebar");
+      sidebar.classList.toggle("hidden");
+    }
+
+    // Bildirim menüsünü göster/gizle
+    function toggleNotificationMenu() {
+      const notificationMenu = document.getElementById("notificationMenu");
+      notificationMenu.style.display = notificationMenu.style.display === "block" ? "none" : "block";
+    }
+
+    // Profil menüsünü göster/gizle
+    function toggleProfileMenu() {
+      const profileMenu = document.getElementById("profileMenu");
+      profileMenu.style.display = profileMenu.style.display === "block" ? "none" : "block";
+    }
+
+    // Particles.js başlat
+    particlesJS("particles-js", {
+  particles: {
+    number: { value: 80, density: { enable: true, value_area: 800 } },
+    color: { value: "#003b83" }, // Altın sarısı
+    shape: { type: "circle" },
+    opacity: { value: 0.8, random: true },
+    size: { value: 4, random: true },
+    line_linked: { enable: false },
+    move: { enable: true, speed: 0.5, random: true }
+  },
+  retina_detect: true
+});
+ // Chart.js grafik
+ const ctx = document.getElementById('resultsChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Matematik 1', 'Fizik 1', 'Kimya 1', 'Biyoloji 1', 'Tarih 1'],
+        datasets: [{
+          label: 'Sınav Notları',
+          data: [85, 45, 75, 60, 90],
+          backgroundColor: [
+            '#0d6efd',
+            '#dc3545',
+            '#0d6efd',
+            '#0d6efd',
+            '#0d6efd'
+          ],
+          borderRadius: 10
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          tooltip: { enabled: true }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100
+          }
+        }
+      }
+    });
+
+  function toggleDarkMode() {
+    const body = document.body;
+    const sidebar = document.getElementById("sidebar");
+    const cards = document.querySelectorAll(".card");
+    const menuIcon = document.querySelector(".menu-icon-wrapper");
+    const darkModeIcon = document.getElementById("darkModeIcon");
+
+    body.classList.toggle("dark-mode");
+    sidebar.classList.toggle("dark-mode");
+    menuIcon.classList.toggle("dark-mode");
+
+    cards.forEach(card => {
+      card.classList.toggle("dark-mode");
+    });
+
+    // Güneş/Ay ikonunu değiştir
+    if (body.classList.contains("dark-mode")) {
+      darkModeIcon.classList.remove("fa-sun");
+      darkModeIcon.classList.add("fa-moon");
+    } else {
+      darkModeIcon.classList.remove("fa-moon");
+      darkModeIcon.classList.add("fa-sun");
+    }
+  }
+
+  </script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
